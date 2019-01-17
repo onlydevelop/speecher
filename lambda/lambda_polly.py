@@ -25,7 +25,7 @@ def lambda_handler(event, context):
     
 def read_file_from_bucket(filename):
     s3 = boto3.resource('s3')
-    file_object = s3.Object(BUCKET_NAME, filename)
+    file_object = s3.Object(BUCKET_NAME, f"translated/{filename}")
     content = file_object.get()['Body'].read().decode('utf-8')
     return content
 
@@ -33,4 +33,4 @@ def read_file_from_bucket(filename):
 def upload_file_to_bucket(filename):
     content = open(f"/tmp/{filename}", "rb").read()
     s3 = boto3.client(service_name='s3', region_name=REGION, use_ssl=True)
-    s3.put_object(Body=content, Bucket=BUCKET_NAME, Key=filename)
+    s3.put_object(Body=content, Bucket=BUCKET_NAME, Key=f"speech/{filename}")
