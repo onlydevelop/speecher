@@ -20,6 +20,7 @@
                 <th>Original Text</th>
                 <th>Translated Text</th>
                 <th>Audio</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -31,6 +32,11 @@
                         <source src="http://speecher-bucket.s3-website-us-east-1.amazonaws.com/speech/speech.mp3?cache=invalid" type="audio/mpeg">
                         Your browser does not support the audio element.
                     </audio>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-success btn-xs" onclick="on_refresh()">
+                        <img src="images/refresh-icon.png" width=20/>
+                    </button>
                 </td>
             </tr>
             </tbody>
@@ -53,6 +59,18 @@
                     console.log("Error")
                 }
             })
+        }
+
+        function on_refresh() {
+            content = "<audio controls>" +
+                        "<source src='" +
+                        "http://speecher-bucket.s3-website-us-east-1.amazonaws.com/speech/speech.mp3?cache=" +
+                        new Date() +
+                        "' type='audio/mpeg'>" +
+                        "Your browser does not support the audio element." +
+                      "</audio>"
+            console.log(content)
+            $('#test').find('tr#data').find('td#audio').html(content)
         }
 
         setInterval(() => {
